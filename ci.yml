@@ -1,0 +1,20 @@
+# Optional safety net: runs the tests and a type-check on every push.
+# The live site is served straight from the /docs folder (see README), so nothing is deployed from here.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
